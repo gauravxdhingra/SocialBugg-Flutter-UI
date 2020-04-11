@@ -1,4 +1,7 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/following_users.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    // _tabController.index
   }
 
   @override
@@ -32,6 +36,13 @@ class _HomeScreenState extends State<HomeScreen>
         ),
         bottom: TabBar(
           controller: _tabController,
+          labelColor: Theme.of(context).primaryColor,
+          indicatorWeight: 3,
+          dragStartBehavior: DragStartBehavior.start,
+          labelStyle: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
           tabs: <Widget>[
             Tab(
               text: 'Trending',
@@ -41,6 +52,11 @@ class _HomeScreenState extends State<HomeScreen>
             ),
           ],
         ),
+      ),
+      body: ListView(
+        children: <Widget>[
+          FollowingUsers(),
+        ],
       ),
     );
   }
