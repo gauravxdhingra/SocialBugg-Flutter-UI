@@ -12,99 +12,115 @@ class PostCarousel extends StatelessWidget {
   _buildPost(BuildContext context, int i) {
     Post post = posts[i];
 
-    return Stack(
-      children: <Widget>[
-        Container(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(15),
-            child: Image(
-              image: AssetImage(post.imageUrl),
-              height: 400,
-              width: 300,
-              fit: BoxFit.cover,
-            ),
+    return AnimatedBuilder(
+      animation: pageController,
+      builder: (context, widget) {
+        double value = 1;
+        if (pageController.position.haveDimensions) {
+          value = pageController.page - i;
+          value = (1 - (value.abs() * 0.25)).clamp(0.0, 1.0);
+        }
+        return Center(
+          child: SizedBox(
+            height: Curves.easeInOut.transform(value) * 400,
+            child: widget,
           ),
-          margin: EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-                blurRadius: 6,
+        );
+      },
+      child: Stack(
+        children: <Widget>[
+          Container(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: Image(
+                image: AssetImage(post.imageUrl),
+                height: 400,
+                width: 300,
+                fit: BoxFit.cover,
               ),
-            ],
-          ),
-        ),
-        Positioned(
-          left: 10,
-          bottom: 10,
-          right: 10,
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  post.title,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+            ),
+            margin: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  offset: Offset(0, 2),
+                  blurRadius: 6,
                 ),
-                Text(
-                  post.location,
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Icon(
-                          Icons.favorite,
-                          color: Colors.red,
-                        ),
-                        SizedBox(
-                          width: 6,
-                        ),
-                        Text(
-                          post.likes.toString(),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Icon(
-                          Icons.comment,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        SizedBox(
-                          width: 6,
-                        ),
-                        Text(
-                          post.comments.toString(),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                  ],
-                )
               ],
             ),
-            padding: EdgeInsets.all(12),
-            height: 110,
-            decoration: BoxDecoration(
-              color: Colors.white54,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(15),
-                bottomRight: Radius.circular(15),
+          ),
+          Positioned(
+            left: 10,
+            bottom: 10,
+            right: 10,
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    post.title,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                  ),
+                  Text(
+                    post.location,
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.favorite,
+                            color: Colors.red,
+                          ),
+                          SizedBox(
+                            width: 6,
+                          ),
+                          Text(
+                            post.likes.toString(),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.comment,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          SizedBox(
+                            width: 6,
+                          ),
+                          Text(
+                            post.comments.toString(),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              padding: EdgeInsets.all(12),
+              height: 110,
+              decoration: BoxDecoration(
+                color: Colors.white54,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(15),
+                  bottomRight: Radius.circular(15),
+                ),
               ),
             ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 
