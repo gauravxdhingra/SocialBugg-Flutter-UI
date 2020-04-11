@@ -27,10 +27,22 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.line_weight),
+          onPressed: () {
+            _scaffoldKey.currentState.openDrawer();
+          },
+        ),
+        iconTheme: IconThemeData(
+          color: Theme.of(context).primaryColor,
+        ),
         backgroundColor: Colors.white,
         brightness: Brightness.light,
         title: Text(

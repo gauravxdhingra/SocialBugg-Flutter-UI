@@ -23,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 clipper: CurveClipper(),
                 child: Image(
                   height: MediaQuery.of(context).size.height / 2.5,
-                  image: AssetImage('assets/images/login_background.jpg'),
+                  image: AssetImage('assets/images/backr1.jpg'),
                   fit: BoxFit.cover,
                   width: double.infinity,
                 ),

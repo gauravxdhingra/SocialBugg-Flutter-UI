@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_social_ui/data/data.dart';
 import 'package:flutter_social_ui/screens/home_screen.dart';
 import 'package:flutter_social_ui/screens/login_screen.dart';
+import 'package:flutter_social_ui/screens/profile_screen.dart';
 
 class CustomDrawer extends StatelessWidget {
   _buildDrawerOption(Icon icon, String title, Function ontap) {
@@ -28,6 +29,7 @@ class CustomDrawer extends StatelessWidget {
               //   // color: Theme.of(context).primaryColor,
               //   color: Colors.lightBlueAccent,
               // ),
+
               Image(
                 image: AssetImage(
                   currentUser.backgroundImageUrl,
@@ -36,6 +38,7 @@ class CustomDrawer extends StatelessWidget {
                 fit: BoxFit.cover,
                 width: double.infinity,
               ),
+
               Positioned(
                 bottom: 20,
                 left: 20,
@@ -43,9 +46,19 @@ class CustomDrawer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      child: ClipOval(
-                        child: Image.asset(
-                          currentUser.profileImageUrl,
+                      child: GestureDetector(
+                        child: ClipOval(
+                          child: Image.asset(
+                            currentUser.profileImageUrl,
+                          ),
+                        ),
+                        onTap: () => Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ProfileScreen(
+                              currentUser,
+                            ),
+                          ),
                         ),
                       ),
                       height: 100,
@@ -61,20 +74,28 @@ class CustomDrawer extends StatelessWidget {
                     SizedBox(
                       width: 15,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color:
-                              Theme.of(context).primaryColor.withOpacity(0.6),
-                          borderRadius: BorderRadius.circular(10)),
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        currentUser.name,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1.5,
-                          color: Colors.white,
+                    GestureDetector(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color:
+                                Theme.of(context).primaryColor.withOpacity(0.6),
+                            borderRadius: BorderRadius.circular(10)),
+                        padding: EdgeInsets.all(10),
+                        child: Text(
+                          currentUser.name,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1.5,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ProfileScreen(currentUser),
                         ),
                       ),
                     )
@@ -106,7 +127,12 @@ class CustomDrawer extends StatelessWidget {
           _buildDrawerOption(
             Icon(Icons.account_circle),
             'Your Profile',
-            () {},
+            () => Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (_) => ProfileScreen(currentUser),
+              ),
+            ),
           ),
           _buildDrawerOption(
             Icon(Icons.settings),
